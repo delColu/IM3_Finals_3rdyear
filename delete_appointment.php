@@ -6,7 +6,7 @@ if (isset($_GET['id'])) {
 
     try {
         // Prepare and execute the delete statement
-        $stmt = $conn->prepare("DELETE FROM appointment WHERE id = :id");
+        $stmt = $conn->prepare("DELETE FROM appointments WHERE id = :id");
         $stmt->bindParam(':id', $appointmentId, PDO::PARAM_INT);
         $stmt->execute();
 

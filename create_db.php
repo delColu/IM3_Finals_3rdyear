@@ -9,6 +9,11 @@ try {
     $conn = new PDO("mysql:host=$servername", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // drop database if it already exists (optional, be careful with this in production)
+    $sql = "DROP DATABASE IF EXISTS $dbname";
+    $conn->exec($sql);
+    echo "Database '$dbname' dropped successfully.<br>";
+
     // Create database if it doesn’t exist
     $sql = "CREATE DATABASE IF NOT EXISTS $dbname CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     $conn->exec($sql);

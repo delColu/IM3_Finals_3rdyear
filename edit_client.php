@@ -5,13 +5,13 @@ $id = $_GET['id'] ?? null;
 $client = null;
 
 if ($id) {
-    $stmt = $conn->prepare("SELECT * FROM client WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM clients WHERE id = ?");
     $stmt->execute([$id]);
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("UPDATE client SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE clients SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE id = ?");
     $stmt->execute([$_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['phone'], $id]);
     header('Location: index_client.php');
     exit;

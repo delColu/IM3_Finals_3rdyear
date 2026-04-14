@@ -3,7 +3,7 @@ include 'db_connect.php';
 
 $id = $_GET['id'] ?? null;
 $service = null;
-$providers = $conn->query("SELECT id, name FROM service_provider")->fetchAll(PDO::FETCH_ASSOC);
+$providers = $conn->query("SELECT id, name FROM service_providers")->fetchAll(PDO::FETCH_ASSOC);
 
 if ($id) {
     $stmt = $conn->prepare("SELECT * FROM services WHERE id = ?");

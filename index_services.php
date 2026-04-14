@@ -13,11 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $services = $conn->query("
     SELECT s.*, sp.name AS provider_name
-    FROM services s
-    JOIN service_provider sp ON s.provider_id = sp.id
+FROM services s
+    JOIN service_providers sp ON s.provider_id = sp.id
+
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-$providers = $conn->query("SELECT id, name FROM service_provider")->fetchAll(PDO::FETCH_ASSOC);
+$providers = $conn->query("SELECT id, name FROM service_providers")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

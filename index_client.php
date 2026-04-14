@@ -2,11 +2,11 @@
 include 'db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("INSERT INTO client (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO clients (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)");
     $stmt->execute([$_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['phone']]);
 }
 
-$clients = $conn->query("SELECT * FROM client")->fetchAll(PDO::FETCH_ASSOC);
+$clients = $conn->query("SELECT * FROM clients")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>

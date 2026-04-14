@@ -2,22 +2,23 @@
 include 'db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("INSERT INTO appointment (client_id, service_provider_id, service_type_id, appointment_date) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO appointments (client_id, service_provider_id, service_type_id, appointment_date) VALUES (?, ?, ?, ?)");
     $stmt->execute([$_POST['client_id'], $_POST['service_provider_id'], $_POST['service_type_id'], $_POST['appointment_date']]);
 }
 
 $appointments = $conn->query("
-    SELECT a.id, c.first_name, c.last_name, sp.name AS provider, a.appointment_date, a.created_at
-    FROM appointment a
-    JOIN client c ON a.client_id = c.id
-    JOIN service_provider sp ON a.service_provider_id = sp.id
+    SELECT a.id, c.first_name, c.last_name, sp.name AS provider, st.name AS service_type, a.appointment_date, a.created_at
+    FROM appointments a
+    JOIN clients c ON a.client_id = c.id
+    JOIN service_providers sp ON a.service_provider_id = sp.id
+    JOIN services st ON a.service_type_id = st.id
 ")->fetchAll(PDO::FETCH_ASSOC);
 
 
 // $services removed - loaded dynamically via AJAX
 
-$clients = $conn->query("SELECT id, first_name, last_name FROM client")->fetchAll(PDO::FETCH_ASSOC);
-$providers = $conn->query("SELECT id, name FROM service_provider")->fetchAll(PDO::FETCH_ASSOC);
+$clients = $conn->query("SELECT id, first_name, last_name FROM clients")->fetchAll(PDO::FETCH_ASSOC);
+$providers = $conn->query("SELECT id, name FROM service_providers")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
@@ -151,6 +152,7 @@ $providers = $conn->query("SELECT id, name FROM service_provider")->fetchAll(PDO
             <th>ID</th>
             <th>Client</th>
             <th>Provider</th>
+            <th>Service</th>
             <th>Date</th>
             <th>Created</th>
             <th>Actions</th>
@@ -160,6 +162,7 @@ $providers = $conn->query("SELECT id, name FROM service_provider")->fetchAll(PDO
                 <td><?= $a['id'] ?></td>
                 <td><?= $a['first_name'] . " " . $a['last_name'] ?></td>
                 <td><?= $a['provider'] ?></td>
+                <td><?= $a['service_type'] ?></td>
                 <td><?= $a['appointment_date'] ?></td>
                 <td><?= $a['created_at'] ?></td>
                 <td> 

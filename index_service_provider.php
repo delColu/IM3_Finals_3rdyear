@@ -2,11 +2,11 @@
 include 'db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("INSERT INTO service_provider (name, email, phone) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO service_providers (name, email, phone) VALUES (?, ?, ?)");
     $stmt->execute([$_POST['name'], $_POST['email'], $_POST['phone']]);
 }
 
-$providers = $conn->query("SELECT * FROM service_provider")->fetchAll(PDO::FETCH_ASSOC);
+$providers = $conn->query("SELECT * FROM service_providers")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>

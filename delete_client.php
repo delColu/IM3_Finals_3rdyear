@@ -6,7 +6,7 @@ $clientId = $_GET['id'];
 
     try {
         // Prepare and execute the delete statement
-        $stmt = $conn->prepare("DELETE FROM client WHERE id = :id");
+        $stmt = $conn->prepare("DELETE FROM clients WHERE id = :id");
 $stmt->bindParam(':id', $clientId, PDO::PARAM_INT);
         $stmt->execute();
 

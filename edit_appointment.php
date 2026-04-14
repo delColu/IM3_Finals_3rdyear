@@ -3,18 +3,18 @@ include 'db_connect.php';
 
 $id = $_GET['id'] ?? null;
 $appointment = null;
-$clients = $conn->query("SELECT id, first_name, last_name FROM client")->fetchAll(PDO::FETCH_ASSOC);
-$providers = $conn->query("SELECT id, name FROM service_provider")->fetchAll(PDO::FETCH_ASSOC);
+$clients = $conn->query("SELECT id, first_name, last_name FROM clients")->fetchAll(PDO::FETCH_ASSOC);
+$providers = $conn->query("SELECT id, name FROM service_providers")->fetchAll(PDO::FETCH_ASSOC);
 // $services removed - loaded via JS
 
 if ($id) {
-    $stmt = $conn->prepare("SELECT * FROM appointment WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM appointments WHERE id = ?");
     $stmt->execute([$id]);
     $appointment = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("UPDATE appointment SET client_id = ?, service_provider_id = ?, service_type_id = ?, appointment_date = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE appointments SET client_id = ?, service_provider_id = ?, service_type_id = ?, appointment_date = ? WHERE id = ?");
     $stmt->execute([$_POST['client_id'], $_POST['service_provider_id'], $_POST['service_type_id'], $_POST['appointment_date'], $id]);
     header('Location: index_appointments.php');
     exit;

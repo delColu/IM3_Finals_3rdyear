@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
     try {
         // Prepare and execute the delete statement
         $stmt = $conn->prepare("DELETE FROM service_provider WHERE id = :id");
-        $stmt->bindParam(':id', $service_provider, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $service_providers, PDO::PARAM_INT);
         $stmt->execute();
 
         // Redirect back to the service_provider page after deletion

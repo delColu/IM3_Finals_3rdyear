@@ -5,13 +5,13 @@ $id = $_GET['id'] ?? null;
 $provider = null;
 
 if ($id) {
-    $stmt = $conn->prepare("SELECT * FROM service_provider WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM service_providers WHERE id = ?");
     $stmt->execute([$id]);
     $provider = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("UPDATE service_provider SET name = ?, email = ?, phone = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE service_providers SET name = ?, email = ?, phone = ? WHERE id = ?");
     $stmt->execute([$_POST['name'], $_POST['email'], $_POST['phone'], $id]);
     header('Location: index_service_provider.php');
     exit;
